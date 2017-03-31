@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
   NgModule,
-  ApplicationRef
+  ApplicationRef,
+  APP_INITIALIZER
 } from '@angular/core';
 import {
   removeNgStyles,
@@ -43,6 +44,10 @@ const APP_PROVIDERS = [
   AppState,
   AdalHelperService,
   ConfigService,
+  { provide: APP_INITIALIZER,
+    useFactory: (config: ConfigService) => () => config.load(),
+    deps: [ConfigService],
+    multi: true },
   AdalService,
   ApiService,
   IDBServices

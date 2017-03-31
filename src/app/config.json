@@ -1,0 +1,9 @@
+{
+    "api":{
+        "endpoint": "http://localhost:8180"
+    },
+    "aad": {
+        "tenantId": "**.onmicrosoft.com",
+        "clientId": "client id"
+    }
+}

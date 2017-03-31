@@ -1,19 +1,22 @@
-import {Injectable, Inject} from '@angular/core';
-import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http } from "@angular/http";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { EnvironmentConfig } from '../../common/models/environmentConfig.interface';
 
 @Injectable()
 export class ConfigService {
-    public config: any;
-
-    constructor(){
+    config: EnvironmentConfig;
+    constructor(private http: Http) {
     }
 
-    public get adalConfig(): any {
-        return {
-            tenant: 'microsoft.onmicrosoft.com',
-            clientId: '5fe3f443-8ad1-47ce-8599-82aa50ba97f0',
-            redirectUri: window.location.href,
-            postLogoutRedirectUri: window.location.href
-        };
+    load() {
+        return new Promise((resolve) => {
+            this.http.get('config.json').map(res => res.json())
+                .subscribe(config => {
+                    this.config = config;
+                    resolve();
+                });
+        });
     }
 }

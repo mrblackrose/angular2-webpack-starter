@@ -4,11 +4,13 @@
 import {
   Component,
   OnInit,
-  ViewEncapsulation
+  ViewEncapsulation,
+  Inject
 } from '@angular/core';
 import { AdalService } from 'ng2-adal/core';
 import { AppState } from './app.service';
 import { ConfigService } from './services/configuration/config.service';
+import { EnvironmentConfig } from './common/models/environmentConfig.interface';
 
 /*
  * App Component
@@ -35,7 +37,12 @@ export class AppComponent implements OnInit {
     private adalService: AdalService,
     private configService: ConfigService
   ) { 
-    this.adalService.init(this.configService.adalConfig);
+    this.adalService.init({      
+        tenant: this.configService.config.aad.tenantId,
+        clientId: this.configService.config.aad.clientId,
+        redirectUri: window.location.href,
+        postLogoutRedirectUri: window.location.href
+    });
     this.adalService.handleWindowCallback();
     this.adalService.getUser();
     if (!this.adalService.userInfo.isAuthenticated) {
