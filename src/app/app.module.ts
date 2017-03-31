@@ -28,6 +28,11 @@ import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
+import { AdalHelperService } from './services/authentication/adal-helper.service';
+import { ConfigService } from './services/configuration/config.service';
+import { IDBServices } from './services/sample-services/idb.service';
+import { AdalService } from 'ng2-adal/core';
+import { ApiService } from './services/api.service';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -35,7 +40,12 @@ import '../styles/headings.css';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
-  AppState
+  AppState,
+  AdalHelperService,
+  ConfigService,
+  AdalService,
+  ApiService,
+  IDBServices
 ];
 
 type StoreType = {
@@ -60,7 +70,7 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES)
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

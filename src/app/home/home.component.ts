@@ -5,6 +5,7 @@ import {
 
 import { AppState } from '../app.service';
 import { Title } from './title';
+import { IDBServices } from '../services/sample-services/idb.service';
 import { XLargeDirective } from './x-large';
 
 @Component({
@@ -27,12 +28,13 @@ export class HomeComponent implements OnInit {
   // TypeScript public modifiers
   constructor(
     public appState: AppState,
-    public title: Title
+    public title: Title,
+    private idbService: IDBServices
   ) {}
 
   public ngOnInit() {
     console.log('hello `Home` component');
-    // this.title.getData().subscribe(data => this.data = data);
+    this.idbService.getConfiguration().subscribe(data => console.log(data));
   }
 
   public submitState(value: string) {
